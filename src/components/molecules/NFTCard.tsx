@@ -86,7 +86,7 @@ const Creator = ({ name, image }: Creator) => (
   </WithIcon>
 );
 
-export function NFTCard({ image, name, description, creator }: Asset) {
+export default function NFTCard({ image, name, description, creator }: Asset) {
   return (
     <Card className="bg-dark-blue-800 p-6">
       <div className="w-full max-w-sm">
