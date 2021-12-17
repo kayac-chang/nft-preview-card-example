@@ -5,6 +5,7 @@ import {
   ReactNode,
 } from "react";
 import { Style } from "@/components/utils";
+import { Asset, Creator } from "@/models";
 import { FaEthereum } from "react-icons/fa";
 import { IoTimeSharp } from "react-icons/io5";
 import clsx from "clsx";
@@ -23,16 +24,19 @@ const Title = ({ children }: Props) => (
 );
 
 type PictureProps = {
+  src: string;
   alt: string;
 };
-const Picture = ({ alt }: PictureProps) => (
+const Picture = ({ src, alt }: PictureProps) => (
   <div className="rounded-lg overflow-hidden aspect-square">
-    <img src="https://picsum.photos/seed/picsum/500" alt={alt} />
+    <img className="w-full h-full" src={src} alt={alt} />
   </div>
 );
 
 const Description = ({ children }: Props) => (
-  <p className="text-soft-blue text-lg font-light leading-7">{children}</p>
+  <p className="text-soft-blue min-h-[1rem] text-lg font-light leading-7">
+    {children}
+  </p>
 );
 
 type WithIconProps = Props & HasClassName & { icon: ReactNode };
@@ -59,34 +63,41 @@ const LatestUpdate = () => (
   </WithIcon>
 );
 
-const Avatar = ({ className }: HasClassName) => (
+const Avatar = ({ className, src, alt }: HasClassName & PictureProps) => (
   <div className={clsx("rounded-full overflow-hidden border", className)}>
-    <img src="https://i.pravatar.cc/300" alt="user avatar" />
+    <img className="w-full h-full" src={src} alt={alt} />
   </div>
 );
 
-const Creator = () => (
-  <WithIcon className="text-soft-blue gap-4" icon={<Avatar className="w-10" />}>
+const Creator = ({ name, image }: Creator) => (
+  <WithIcon
+    className="text-soft-blue gap-4"
+    icon={
+      <Avatar
+        className="w-10 aspect-square"
+        src={image}
+        alt={`${name}'s profile image`}
+      />
+    }
+  >
     <p>
-      Creation of <span className="text-white">Jules Wyvern</span>
+      Creation of <span className="text-white">{name}</span>
     </p>
   </WithIcon>
 );
 
-export function NFTCard() {
+export function NFTCard({ image, name, description, creator }: Asset) {
   return (
     <Card className="bg-dark-blue-800 p-6">
       <div className="w-full max-w-sm">
         <header>
-          <Picture alt="NFT card picture" />
+          <Picture src={image} alt="NFT card picture" />
         </header>
 
         <div className="mt-6 mb-4 space-y-4">
-          <Title>Equilibrium #3429</Title>
+          <Title>{name}</Title>
 
-          <Description>
-            Our Equilibrium collection promotes balance and calm.
-          </Description>
+          <Description>{description}</Description>
 
           <div className="flex justify-between">
             <Price />
@@ -101,7 +112,7 @@ export function NFTCard() {
             "flex items-center gap-4"
           )}
         >
-          <Creator />
+          <Creator {...creator} />
         </footer>
       </div>
     </Card>
