@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -9,7 +9,7 @@ if (!element) {
 }
 
 ReactDOM.createRoot(element).render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>
+  </StrictMode>
 );
