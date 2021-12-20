@@ -52,7 +52,7 @@ function App() {
       )}
     >
       <Suspense fallback={"loading"}>
-        <NFTCard {...asset!} />
+        {asset && <NFTCard {...asset} />}
       </Suspense>
     </main>
   );
